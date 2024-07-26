@@ -26,14 +26,14 @@ class Attribute{
 	float* attributes;
 		
 	// for the hidden attributes (most probably a label)
-	auto* hidden_attributes;
+	float* hidden_attributes;
 
 	int num_attributes;
 	int num_hidden_attributes;
 
 
 	// constructor (hammer hammer)
-	Attribute(float* attributes, auto* hidden_attributes, int x, int y){
+	Attribute(float* attributes, float* hidden_attributes, int x, int y){
 		this->attributes = attributes;
 		this->hidden_attributes = hidden_attributes;
 		this->num_attributes = x;
@@ -41,7 +41,7 @@ class Attribute{
 	}
 
 
-}
+};
 
 
 
@@ -71,14 +71,19 @@ class Vertex{
 			this->vertex_attribute = attributes;
 		}
 
+		// defualt constructor
+		Vertex(){
+
+		}
+
 		
 		// function to add a neighbor
-		void addNeighbor(Vertex othervertex){
+		void addNeighbor(Vertex* othervertex){
 			this->degree++;
 			this->neighbors[othervertex->index]++;
 		}
 
-}
+};
 
 
 
@@ -102,7 +107,7 @@ class Graph{
 		Vertex vertices[MAX_NODES];
 
 		
-		// constructore
+		// constructor
 		Graph(){
 			this->cardinality = 0;
 			this->size = 0;
@@ -111,7 +116,7 @@ class Graph{
 		
 		// function to add a vertex
 		void addVertex(Attribute* attr){
-			vertices[cardinality] = new Vertex(attr); 
+			vertices[cardinality] = Vertex(attr); 
 			this->cardinality++;
 		}
 
@@ -119,12 +124,12 @@ class Graph{
 		// function to print the graph
 		void printGraph(){
 			
-			Vertex* temp = malloc(sizeof(Vertex));
+			Vertex* temp;
 			for(int i = 0; i <= this->cardinality; i++){
 				cout<<"Vertex "<<i<<" properties:\n";
-				temp = this->vertices[i];
-				for(int j = 0; j < temp->num_attributes; j++){
-					cout<<"\tAttribute
+				*temp = this->vertices[i];
+				for(int j = 0; j < temp->vertex_attribute->num_attributes; j++){
+					cout<<"\tAttribute"<<temp->vertex_attribute->attributes[j];
 				}
 			}
 
@@ -133,5 +138,5 @@ class Graph{
 
 
 	
-}
+};
 
